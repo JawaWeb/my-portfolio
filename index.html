@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WanderLux | Travel Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 0px rgba(255,107,74,0); }
+            100% { text-shadow: 0 0 20px rgba(255,107,74,0.5); }
+        }
+
+        .fade-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 16px 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f4c5f, #ff6b4a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b4a;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: #ff6b4a;
+            border-color: #ff6b4a;
+            color: #fff;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #0f4c5f;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .user-name:hover {
+            color: #ff6b4a;
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid #ff6b4a;
+            color: #ff6b4a;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #ff6b4a;
+            color: #fff;
+        }
+
+        .btn-nav {
+            background: #ff6b4a;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-nav-outline {
+            background: transparent;
+            border: 1px solid #ff6b4a;
+            color: #ff6b4a;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-nav-outline:hover {
+            background: #ff6b4a;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .logo-text {
+                font-size: 20px;
+            }
+            .logo-img {
+                height: 32px;
+            }
+        }
+
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 100px;
+            background: linear-gradient(135deg, #0f4c5f 0%, #ff6b4a 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff, #ffe0b5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 60px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-highlight {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 10;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down a {
+            color: #fff;
+            font-size: 32px;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .scroll-down {
+                bottom: 20px;
+            }
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 48px;
+            font-size: 18px;
+        }
+
+        .stats {
+            background: #f8fafc;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-card h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ff6b4a;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .destination-card {
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .destination-info {
+            padding: 24px;
+        }
+
+        .destination-info h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .destination-rating {
+            color: #f59e0b;
+            margin-bottom: 12px;
+        }
+
+        .destination-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff6b4a;
+            margin: 16px 0;
+        }
+
+        .btn-details {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-details:hover {
+            background: #3b82f6;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 16px;
+        }
+
+        .review-card h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            color: #f59e0b;
+            margin-bottom: 12px;
+        }
+
+        .review-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 32px;
+            max-width: 500px;
+            width: 90%;
+            padding: 32px;
+            position: relative;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-content h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .modal-destination-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-description {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ff6b4a;
+            margin-bottom: 24px;
+        }
+
+        .btn-modal-book {
+            width: 100%;
+            background: #ff6b4a;
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-modal-book:hover {
+            background: #0f4c5f;
+            transform: translateY(-2px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ff6b4a;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #ff6b4a;
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background: #0f4c5f;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #64748b;
+        }
+
+        .modal-footer a {
+            color: #ff6b4a;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer {
+            background: #0f172a;
+            color: #fff;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 40px;
+            z-index: 10000;
+            animation: fadeInUp 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            white-space: nowrap;
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo-area">
+                <img class="logo-img" src="Logo/Logo WanderLux.png" alt="WanderLux" onerror="this.style.display='none'">
+                <span class="logo-text">WanderLux</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Главная</a>
+                <a href="#destinations">Направления</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contact">Контакты</a>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <div class="user-area" id="userArea"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-highlight">✨ Эксклюзивные туры 2025 ✨</div>
+            <h1 id="heroTitle">Путешествуй<br>со смыслом</h1>
+            <p id="heroDesc">Авторские маршруты по самым живописным уголкам планеты. Индивидуальный подход, лучшие гиды и незабываемые впечатления. Ваше идеальное путешествие начинается здесь.</p>
+        </div>
+        <div class="scroll-down">
+            <a href="#destinations"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card scroll-animate"><h2>500+</h2><p id="statDestinations">Направлений</p></div>
+                <div class="stat-card scroll-animate"><h2>50k+</h2><p id="statTravelers">Довольных туристов</p></div>
+                <div class="stat-card scroll-animate"><h2>15+</h2><p id="statYears">Лет опыта</p></div>
+                <div class="stat-card scroll-animate"><h2>24/7</h2><p id="statSupport">Поддержка</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="destinations">
+        <div class="container">
+            <h2 class="section-title scroll-animate" id="destinationsTitle">Популярные направления</h2>
+            <p class="section-subtitle scroll-animate" id="destinationsSubtitle">Лучшие места для незабываемых впечатлений</p>
+            <div class="destinations-grid" id="destinationsGrid"></div>
+        </div>
+    </section>
+
+    <section id="reviews" style="background: #f8fafc;">
+        <div class="container">
+            <h2 class="section-title scroll-animate" id="reviewsTitle">Что говорят наши путешественники</h2>
+            <p class="section-subtitle scroll-animate" id="reviewsSubtitle">Реальные истории из реальных приключений</p>
+            <div class="reviews-grid" id="reviewsGrid"></div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col"><h3>WanderLux</h3><p id="footerDesc">Открывайте мир с уверенностью.</p></div>
+                <div class="footer-col"><h3 id="footerQuickLinks">Быстрые ссылки</h3><ul><li><a href="#home">Главная</a></li><li><a href="#destinations">Направления</a></li></ul></div>
+                <div class="footer-col"><h3 id="footerContact">Контакты</h3><ul><li><i class="fas fa-phone"></i> +1 (555) 123-4567</li><li><i class="fas fa-envelope"></i> hello@wanderlux.com</li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>© 2025 WanderLux. Все права защищены.</p></div>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('detailsModal')">×</button>
+            <img id="modalImg" class="modal-destination-img" src="" alt="">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDesc" class="modal-description"></p>
+            <div id="modalPrice" class="modal-price"></div>
+            <button class="btn-modal-book" onclick="openBookingForm()">Забронировать</button>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('bookingModal')">×</button>
+            <h2>📞 Оставьте заявку</h2>
+            <p style="color:#64748b; margin-bottom:20px;">Мы свяжемся с вами для подтверждения бронирования</p>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <select id="countryCode" required>
+                        <option value="+1">🇺🇸 США (+1)</option>
+                        <option value="+44">🇬🇧 Великобритания (+44)</option>
+                        <option value="+380">🇺🇦 Украина (+380)</option>
+                        <option value="+49">🇩🇪 Германия (+49)</option>
+                        <option value="+33">🇫🇷 Франция (+33)</option>
+                        <option value="+34">🇪🇸 Испания (+34)</option>
+                        <option value="+39">🇮🇹 Италия (+39)</option>
+                        <option value="+7">🇷🇺 Россия (+7)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phoneNumber" placeholder="Номер телефона" required>
+                </div>
+                <button type="submit" class="btn-submit">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('profileModal')">×</button>
+            <h2>👤 Настройки профиля</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <input type="text" id="profileName" placeholder="Имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="profileEmail" placeholder="Email" disabled>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="profilePassword" placeholder="Новый пароль">
+                </div>
+                <button type="submit" class="btn-submit">Сохранить изменения</button>
+                <button type="button" class="btn-submit" style="background:#ef4444; margin-top:10px;" onclick="deleteAccount()">Удалить аккаунт</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">×</button>
+            <h2>Добро пожаловать</h2>
+            <form id="loginForm">
+                <div class="form-group"><input type="email" id="loginEmail" placeholder="Email" required></div>
+                <div class="form-group"><input type="password" id="loginPassword" placeholder="Пароль" required></div>
+                <button type="submit" class="btn-submit">Войти</button>
+            </form>
+            <div class="modal-footer">Нет аккаунта? <a onclick="openModal('registerModal'); closeModal('loginModal')">Зарегистрироваться</a></div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('registerModal')">×</button>
+            <h2>Создать аккаунт</h2>
+            <form id="registerForm">
+                <div class="form-group"><input type="text" id="regName" placeholder="Полное имя" required></div>
+                <div class="form-group"><input type="email" id="regEmail" placeholder="Email" required></div>
+                <div class="form-group"><input type="password" id="regPassword" placeholder="Пароль" required></div>
+                <button type="submit" class="btn-submit">Зарегистрироваться</button>
+            </form>
+            <div class="modal-footer">Уже есть аккаунт? <a onclick="openModal('loginModal'); closeModal('registerModal')">Войти</a></div>
+        </div>
+    </div>
+
+    <script>
+        const destinations = [
+            { name: "Bali, Indonesia", nameRu: "Бали, Индонезия", rating: 4.8, price: 899, priceRu: 899, img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2070&auto=format", desc: "Experience paradise on earth with stunning beaches, vibrant culture, and lush rice terraces.", descRu: "Испытайте рай на земле с потрясающими пляжами, яркой культурой и пышными рисовыми террасами." },
+            { name: "Santorini, Greece", nameRu: "Санторини, Греция", rating: 4.9, price: 1299, priceRu: 1299, img: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=2070&auto=format", desc: "Iconic white-washed buildings, breathtaking sunsets, and crystal-clear Aegean waters.", descRu: "Знаменитые белоснежные здания, захватывающие закаты и кристально чистые воды Эгейского моря." },
+            { name: "Kyoto, Japan", nameRu: "Киото, Япония", rating: 4.7, price: 1599, priceRu: 1599, img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format", desc: "Ancient temples, traditional tea ceremonies, and stunning cherry blossoms.", descRu: "Древние храмы, традиционные чайные церемонии и потрясающая сакура." }
+        ];
+
+        const reviews = [
+            { name: "Sarah Johnson", nameRu: "Сара Джонсон", rating: 5, text: "Amazing experience! The guides were knowledgeable and the itinerary was perfect.", textRu: "Потрясающий опыт! Гиды были знающими, а маршрут идеальным.", img: "https://randomuser.me/api/portraits/women/1.jpg" },
+            { name: "Michael Chen", nameRu: "Майкл Чен", rating: 5, text: "Best vacation of my life. Everything was well organized and stress-free.", textRu: "Лучший отпуск в моей жизни. Всё было отлично организовано.", img: "https://randomuser.me/api/portraits/men/1.jpg" },
+            { name: "Emma Wilson", nameRu: "Эмма Уилсон", rating: 4, text: "Great value for money. Would definitely recommend.", textRu: "Отличное соотношение цены и качества. Обязательно порекомендую.", img: "https://randomuser.me/api/portraits/women/2.jpg" }
+        ];
+
+        let currentLang = 'ru';
+        let currentUser = null;
+        let currentDestination = null;
+
+        const translations = {
+            ru: {
+                heroTitle: "Путешествуй<br>со смыслом",
+                heroDesc: "Авторские маршруты по самым живописным уголкам планеты. Индивидуальный подход, лучшие гиды и незабываемые впечатления.",
+                statDestinations: "Направлений", statTravelers: "Довольных туристов", statYears: "Лет опыта", statSupport: "Поддержка",
+                destinationsTitle: "Популярные направления", destinationsSubtitle: "Лучшие места для незабываемых впечатлений",
+                reviewsTitle: "Что говорят наши путешественники", reviewsSubtitle: "Реальные истории из реальных приключений",
+                detailsBtn: "Подробнее", from: "от", needAuth: "Пожалуйста, войдите в систему", bookingSuccess: "Заявка отправлена! Мы свяжемся с вами.",
+                profileSaved: "Профиль обновлен", accountDeleted: "Аккаунт удален", footerDesc: "Открывайте мир с уверенностью.", footerQuickLinks: "Быстрые ссылки", footerContact: "Контакты"
+            },
+            en: {
+                heroTitle: "Travel<br>with purpose",
+                heroDesc: "Author's routes to the most picturesque corners of the planet. Individual approach, best guides and unforgettable experiences.",
+                statDestinations: "Destinations", statTravelers: "Happy Travelers", statYears: "Years Experience", statSupport: "Support",
+                destinationsTitle: "Popular Destinations", destinationsSubtitle: "Hand-picked locations for unforgettable experiences",
+                reviewsTitle: "What Our Travelers Say", reviewsSubtitle: "Real stories from real adventures",
+                detailsBtn: "Details", from: "from", needAuth: "Please sign in to continue", bookingSuccess: "Request sent! We will contact you.",
+                profileSaved: "Profile updated", accountDeleted: "Account deleted", footerDesc: "Discover the world with confidence.", footerQuickLinks: "Quick Links", footerContact: "Contact"
+            }
+        };
+
+        function t(key) { return translations[currentLang][key] || key; }
+
+        function renderDestinations() {
+            const grid = document.getElementById('destinationsGrid');
+            grid.innerHTML = destinations.map((dest, idx) => {
+                const name = currentLang === 'ru' ? dest.nameRu : dest.name;
+                const price = currentLang === 'ru' ? dest.priceRu : dest.price;
+                return `<div class="destination-card">
+                    <img src="${dest.img}" alt="${name}">
+                    <div class="destination-info">
+                        <h3>${name}</h3>
+                        <div class="destination-rating">★ ${dest.rating}</div>
+                        <div class="destination-price">${t('from')} $${price}</div>
+                        <button class="btn-details" onclick="openDetails(${idx})">📋 ${t('detailsBtn')}</button>
+                    </div>
+                </div>`;
+            }).join('');
+            setTimeout(() => initScrollAnimation(), 100);
+        }
+
+        function renderReviews() {
+            const grid = document.getElementById('reviewsGrid');
+            grid.innerHTML = reviews.map(r => {
+                const name = currentLang === 'ru' ? r.nameRu : r.name;
+                const text = currentLang === 'ru' ? r.textRu : r.text;
+                return `<div class="review-card">
+                    <img src="${r.img}" alt="${name}"><h4>${name}</h4>
+                    <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                    <p>"${text}"</p>
+                </div>`;
+            }).join('');
+            setTimeout(() => initScrollAnimation(), 100);
+        }
+
+        function updateLanguage() {
+            document.getElementById('heroTitle').innerHTML = t('heroTitle');
+            document.getElementById('heroDesc').innerHTML = t('heroDesc');
+            document.getElementById('statDestinations').textContent = t('statDestinations');
+            document.getElementById('statTravelers').textContent = t('statTravelers');
+            document.getElementById('statYears').textContent = t('statYears');
+            document.getElementById('statSupport').textContent = t('statSupport');
+            document.getElementById('destinationsTitle').textContent = t('destinationsTitle');
+            document.getElementById('destinationsSubtitle').textContent = t('destinationsSubtitle');
+            document.getElementById('reviewsTitle').textContent = t('reviewsTitle');
+            document.getElementById('reviewsSubtitle').textContent = t('reviewsSubtitle');
+            document.getElementById('footerDesc').textContent = t('footerDesc');
+            document.getElementById('footerQuickLinks').textContent = t('footerQuickLinks');
+            document.getElementById('footerContact').textContent = t('footerContact');
+            renderDestinations(); renderReviews(); updateUserUI();
+        }
+
+        function openDetails(idx) {
+            currentDestination = destinations[idx];
+            const dest = currentDestination;
+            const name = currentLang === 'ru' ? dest.nameRu : dest.name;
+            const desc = currentLang === 'ru' ? dest.descRu : dest.desc;
+            const price = currentLang === 'ru' ? dest.priceRu : dest.price;
+            document.getElementById('modalImg').src = dest.img;
+            document.getElementById('modalTitle').textContent = name;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalPrice').textContent = `${t('from')} $${price} / person`;
+            openModal('detailsModal');
+        }
+
+        function openBookingForm() {
+            closeModal('detailsModal');
+            if (!currentUser) { showToast(t('needAuth'), true); openModal('loginModal'); return; }
+            openModal('bookingModal');
+        }
+
+        function updateUserUI() {
+            const userArea = document.getElementById('userArea');
+            if (currentUser) {
+                userArea.innerHTML = `<span class="user-name" onclick="openProfileModal()">👤 ${currentUser.name}</span><button class="btn-logout" onclick="logout()">Выйти</button>`;
+            } else {
+                userArea.innerHTML = `<button class="btn-nav" onclick="openModal('loginModal')">Войти</button><button class="btn-nav-outline" onclick="openModal('registerModal')">Регистрация</button>`;
+            }
+        }
+
+        function openProfileModal() { if (currentUser) { document.getElementById('profileName').value = currentUser.name; document.getElementById('profileEmail').value = currentUser.email; openModal('profileModal'); } }
+
+        function registerUser(name, email, password) {
+            let users = JSON.parse(localStorage.getItem('wanderlux_users') || '[]');
+            if (users.find(u => u.email === email)) { showToast('Email уже зарегистрирован', true); return false; }
+            users.push({ name, email, password });
+            localStorage.setItem('wanderlux_users', JSON.stringify(users));
+            currentUser = { name, email };
+            localStorage.setItem('wanderlux_user', JSON.stringify(currentUser));
+            updateUserUI();
+            showToast(`Добро пожаловать, ${name}!`);
+            return true;
+        }
+
+        function loginUser(email, password) {
+            const users = JSON.parse(localStorage.getItem('wanderlux_users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = { name: user.name, email: user.email };
+                localStorage.setItem('wanderlux_user', JSON.stringify(currentUser));
+                updateUserUI();
+                showToast(`С возвращением, ${user.name}!`);
+                return true;
+            }
+            return false;
+        }
+
+        function updateProfile(name, newPassword) {
+            if (!currentUser) return;
+            let users = JSON.parse(localStorage.getItem('wanderlux_users') || '[]');
+            const idx = users.findIndex(u => u.email === currentUser.email);
+            if (idx !== -1) {
+                users[idx].name = name;
+                if (newPassword) users[idx].password = newPassword;
+                localStorage.setItem('wanderlux_users', JSON.stringify(users));
+                currentUser.name = name;
+                localStorage.setItem('wanderlux_user', JSON.stringify(currentUser));
+                updateUserUI();
+                showToast(t('profileSaved'));
+                closeModal('profileModal');
+            }
+        }
+
+        function deleteAccount() {
+            if (!currentUser) return;
+            if (confirm('Вы уверены, что хотите удалить аккаунт?')) {
+                let users = JSON.parse(localStorage.getItem('wanderlux_users') || '[]');
+                users = users.filter(u => u.email !== currentUser.email);
+                localStorage.setItem('wanderlux_users', JSON.stringify(users));
+                localStorage.removeItem('wanderlux_user');
+                currentUser = null;
+                updateUserUI();
+                showToast(t('accountDeleted'));
+                closeModal('profileModal');
+            }
+        }
+
+        function logout() { currentUser = null; localStorage.removeItem('wanderlux_user'); updateUserUI(); showToast('Вы вышли из системы'); }
+        function showToast(msg, isError = false) { const toast = document.createElement('div'); toast.className = `toast ${isError ? 'error' : ''}`; toast.textContent = msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 3000); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function initScrollAnimation() {
+            const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-animate, .destination-card, .review-card').forEach(el => observer.observe(el));
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => { e.preventDefault(); if (registerUser(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPassword').value)) closeModal('registerModal'); });
+        document.getElementById('loginForm').addEventListener('submit', (e) => { e.preventDefault(); if (loginUser(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)) closeModal('loginModal'); else showToast('Неверный email или пароль', true); });
+        document.getElementById('profileForm').addEventListener('submit', (e) => { e.preventDefault(); updateProfile(document.getElementById('profileName').value, document.getElementById('profilePassword').value); });
+        document.getElementById('bookingForm').addEventListener('submit', (e) => { e.preventDefault(); if (document.getElementById('phoneNumber').value) { showToast(t('bookingSuccess')); closeModal('bookingModal'); document.getElementById('bookingForm').reset(); } else showToast('Введите номер телефона', true); });
+
+        document.querySelectorAll('.lang-btn').forEach(btn => { btn.addEventListener('click', () => { currentLang = btn.dataset.lang; document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); updateLanguage(); }); });
+
+        const saved = localStorage.getItem('wanderlux_user');
+        if (saved) currentUser = JSON.parse(saved);
+        renderDestinations(); renderReviews(); updateLanguage(); initScrollAnimation();
+
+        window.openDetails = openDetails; window.openBookingForm = openBookingForm; window.openModal = openModal; window.closeModal = closeModal;
+        window.logout = logout; window.openProfileModal = openProfileModal; window.deleteAccount = deleteAccount;
+    </script>
+</body>
+</html>
